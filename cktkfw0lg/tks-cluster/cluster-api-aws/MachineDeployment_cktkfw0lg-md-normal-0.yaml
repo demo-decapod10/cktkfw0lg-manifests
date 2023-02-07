@@ -1,0 +1,28 @@
+# Source: cluster-api-aws/templates/machine-deployment.yaml
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  name: cktkfw0lg-md-normal-0
+  namespace: cktkfw0lg
+  annotations:
+    cluster.x-k8s.io/cluster-api-autoscaler-node-group-min-size: "1"
+    cluster.x-k8s.io/cluster-api-autoscaler-node-group-max-size: "5"
+spec:
+  clusterName: cktkfw0lg
+  replicas: 1
+  template:
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfigTemplate
+          name: cktkfw0lg-md-normal
+      clusterName: cktkfw0lg
+      failureDomain: ap-northeast-2a
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: AWSMachineTemplate
+        name: cktkfw0lg-md-normal
+      version: v1.22.5
+  selector:
+        matchLabels: null
